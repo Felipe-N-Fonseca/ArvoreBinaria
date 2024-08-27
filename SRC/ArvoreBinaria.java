@@ -37,12 +37,14 @@ class Node{
     
     public int getLevel(){ // busca o nivel do nó
         if(isRoot())return 0;
-        return getLevel()+1;
+        return getParent().getLevel()+1;
     }
 
     public int getHeight(){ // encontra a altura do nó
         if(isLeaf())return 0;
-        return calc.max(getleft().getHeight(), getRight().getHeight());
+        if(getleft() == null) return getRight().getHeight()+1;
+        if(getRight() == null)return getleft().getHeight()+1;
+        return calc.max(getleft().getHeight(), getRight().getHeight())+1;
     }
 }
 
@@ -51,4 +53,33 @@ class calc{
         if(a > b)return a;
         return b;
     }
+}
+
+class ArvoreBinaria{
+    public static void main(String[] args) {
+        Node root = new Node();
+        root.setLeft(new Node());
+        root.getleft().setParent(root);
+        root.setRight(new Node());
+        root.getRight().setParent(root);
+        root.getRight().setRight(new Node());
+        root.getRight().getRight().setParent(root.getRight());
+        root.getRight().setLeft(new Node());
+        root.getRight().getleft().setParent(root.getRight());
+        root.getRight().getRight().setRight(new Node());
+        root.getRight().getRight().getRight().setParent(root.getRight().getRight());
+
+        System.out.println("O root é raiz: " + root.isRoot());
+        System.out.println("O filho direito do root é raiz: " + root.getRight().isRoot());
+        System.out.println("O root é folha: " + root.isLeaf());
+        System.out.println("O filho esquerdo do root é folha: " + root.getleft().isLeaf());
+        System.out.println("O grau do root é: " + root.getDegree());
+        System.out.println("O grau filho esquerdo do root é: " + root.getleft().getDegree());
+        System.out.println("O nível do root é: " + root.getLevel());
+        System.out.println("O nível do neto mais a direita do root é: " + root.getRight().getRight().getLevel());
+        System.out.println("A altura da arvore é: " + root.getHeight());
+
+    }
+
+
 }
