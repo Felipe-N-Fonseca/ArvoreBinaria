@@ -28,6 +28,8 @@ class Node{
     // Métodos
     public boolean isRoot(){return getParent() == null;} // Verifica se é o nó raiz
     public boolean isLeaf(){return (getleft() == null && getRight() == null);} // verifica se é o nó folha
+    public boolean hasLeft(){return getleft() != null;}
+    public boolean hasRight(){return getRight() != null;}
 
     public int getDegree(){ // busca o grau do nó
         if(getleft() != null && getRight() != null) return 2;
